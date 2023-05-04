@@ -98,10 +98,13 @@ extension RMCharactersView: RMCharacterViewModelDelegate {
         
         guard let layout = collectionView.collectionViewLayout as? RMCharactersViewLayout else { return }
         
-        collectionView.performBatchUpdates {
+//        collectionView.reloadData()
+//        layout.updateLayout()
+        
+        collectionView.performBatchUpdates({
             collectionView.insertItems(at: indexPaths)
-            layout.updateLayout()
-        }
+            layout.invalidateLayout()
+        })
     }
     
     func didSelectCharacter(_ character: RMCharacter) {

@@ -33,15 +33,17 @@ final class RMCharacterCollectionViewCellModel {
             completion(.failure(URLError(.badURL)))
             return
         }
-        let urlRequest = URLRequest(url: url)
-        let task = URLSession.shared.dataTask(with: urlRequest) { data, _, error in
-            guard let data = data, error == nil else {
-                completion(.failure(error ?? URLError(.badServerResponse)))
-                return
-            }
-            completion(.success(data))
-        }
         
-        task.resume()
+        RMImageLoader.shared.fetchImage(url, completion: completion)
+        
+//        let urlRequest = URLRequest(url: url)
+//        let task = URLSession.shared.dataTask(with: urlRequest) { data, _, error in
+//            guard let data = data, error == nil else {
+//                completion(.failure(error ?? URLError(.badServerResponse)))
+//                return
+//            }
+//            completion(.success(data))
+//        }
+//        task.resume()
     }
 }

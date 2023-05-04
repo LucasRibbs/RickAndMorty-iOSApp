@@ -74,8 +74,8 @@ final class RMCharactersViewModel: NSObject {
                 let lastIdx = strong_self.characters.count + results.count - 1
                 let newIndexPaths: [IndexPath] = Array(firstIdx...lastIdx).map({ IndexPath(item: $0, section: 0) })
     
-                strong_self.apiInfo = info
-                strong_self.characters.append(contentsOf: results)
+                self?.apiInfo = info
+                self?.characters.append(contentsOf: results)
                 
                 DispatchQueue.main.async {
                     self?.delegate?.didLoadAdditionalCharacters(at: newIndexPaths)
@@ -155,27 +155,27 @@ extension RMCharactersViewModel: UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         guard shouldShowLoadMoreIndicator, !isLoadingCharacters else { return }
         
-//        let contentOffsetY = scrollView.contentOffset.y
-//        let contentHeight = scrollView.contentSize.height
-//        let scrollViewHeight = scrollView.frame.height
-//
-//        if(contentOffsetY >= contentHeight-scrollViewHeight-100.0) {
-//            print("Should start fetching more characters")
-//
-//            fetchAdditionalCharacters()
-//        }
-//
-        Timer.scheduledTimer(withTimeInterval: 0.2, repeats: false) { [weak self] t in
-            let contentOffsetY = scrollView.contentOffset.y
-            let contentHeight = scrollView.contentSize.height
-            let scrollViewHeight = scrollView.frame.height
-            
-            if(contentOffsetY >= contentHeight-scrollViewHeight-100.0) {
-                
-                self?.fetchAdditionalCharacters()
-            }
-            
-            t.invalidate()
+        let contentOffsetY = scrollView.contentOffset.y
+        let contentHeight = scrollView.contentSize.height
+        let scrollViewHeight = scrollView.frame.height
+
+        if(contentOffsetY >= contentHeight-scrollViewHeight-100.0) {
+            print("Should start fetching more characters")
+
+            fetchAdditionalCharacters()
         }
+//
+//        Timer.scheduledTimer(withTimeInterval: 0.2, repeats: false) { [weak self] t in
+//            let contentOffsetY = scrollView.contentOffset.y
+//            let contentHeight = scrollView.contentSize.height
+//            let scrollViewHeight = scrollView.frame.height
+//
+//            if(contentOffsetY >= contentHeight-scrollViewHeight-100.0) {
+//
+//                self?.fetchAdditionalCharacters()
+//            }
+//
+//            t.invalidate()
+//        }
     }
 }

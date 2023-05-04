@@ -106,6 +106,7 @@ final class RMCharacterCollectionViewCell: UICollectionViewCell {
         
         nameLabel.text = viewModel.characterName
         statusLabel.text = viewModel.characterStatusText
+        
         viewModel.fetchCharacterImage { [weak self] result in
             switch result {
             case .success(let data):

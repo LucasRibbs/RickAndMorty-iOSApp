@@ -28,7 +28,10 @@ final class RMCharactersViewLayout: UICollectionViewLayout {
         return columnWidth
     }
     
-    private var cache = [UICollectionViewLayoutAttributes]()
+    private var cachedAttributes = [UICollectionViewLayoutAttributes]()
+    
+    private let xOffset: [CGFloat] = Array(0..<numberOfColumns).map({ CGFloat($0)*(columnWidth+defaultSpacing)+defaultSpacing })
+    private var yOffset: [CGFloat] = [CGFloat](repeating: defaultSpacing, count: numberOfColumns)
     
     private var contentHeight: CGFloat = 0.0
     private var contentWidth: CGFloat { return collectionView!.bounds.width }
@@ -39,7 +42,8 @@ final class RMCharactersViewLayout: UICollectionViewLayout {
     
     override public func prepare() {
         
-        if cache.isEmpty {
+        if cachedAttributes.count < collectionView!.numberOfItems(inSection: 0) {
+            if !cachedAttributes.isEmpty { cachedAttributes.removeLast() }
             
             setupLayout()
         }
@@ -47,7 +51,7 @@ final class RMCharactersViewLayout: UICollectionViewLayout {
     
     override public func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
         var layoutAttributes = [UICollectionViewLayoutAttributes]()
-        for attributes in cache {
+        for attributes in cachedAttributes {
             if attributes.frame.intersects(rect) {
                 layoutAttributes.append(attributes)
             }
@@ -55,10 +59,14 @@ final class RMCharactersViewLayout: UICollectionViewLayout {
         return layoutAttributes
     }
     
-    public func updateLayout() {
+    override public func layoutAttributesForItem(at indexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
         
-        cache.removeAll()
-        setupLayout()
+        return cachedAttributes[indexPath.item]
+    }
+    
+    override public func layoutAttributesForSupplementaryView(ofKind elementKind: String, at indexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
+        
+        return cachedAttributes.last
     }
     
     private func setupLayout() {
@@ -67,11 +75,12 @@ final class RMCharactersViewLayout: UICollectionViewLayout {
         let numberOfColumns: Int = RMCharactersViewLayout.numberOfColumns
         let columnWidth: CGFloat = RMCharactersViewLayout.columnWidth
         let footerHeight: CGFloat = delegate.collectionView(collectionView!, heightForFooterInSection: 0)
-
-        let xOffset: [CGFloat] = Array(0..<numberOfColumns).map({ CGFloat($0)*(columnWidth+defaultSpacing)+defaultSpacing })
-        var yOffset: [CGFloat] = [CGFloat](repeating: defaultSpacing, count: numberOfColumns)
-
-        for item in 0 ..< collectionView!.numberOfItems(inSection: 0) {
+        
+        print(yOffset)
+        
+        let i = cachedAttributes.count
+        print("Num of items: \(collectionView!.numberOfItems(inSection: 0))")
+        for item in i ..< collectionView!.numberOfItems(inSection: 0) {
             let column = item % numberOfColumns
             let indexPath = IndexPath(item: item, section: 0)
             
@@ -81,7 +90,7 @@ final class RMCharactersViewLayout: UICollectionViewLayout {
             
             let attributes = UICollectionViewLayoutAttributes(forCellWith: indexPath)
             attributes.frame = cellFrame
-            cache.append(attributes)
+            cachedAttributes.append(attributes)
             
             contentHeight = max(contentHeight, cellFrame.maxY+defaultSpacing)
             yOffset[column] += cellHeight+defaultSpacing
@@ -90,6 +99,8 @@ final class RMCharactersViewLayout: UICollectionViewLayout {
         let attr = UICollectionViewLayoutAttributes(forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter, with: IndexPath(item: 1, section: 0))
         attr.frame = CGRect(x: 0.0, y: contentHeight, width: contentWidth, height: footerHeight)
         contentHeight = max(contentHeight, attr.frame.maxY)
-        cache.append(attr)
+        cachedAttributes.append(attr)
+        
+        print("Attributes cache: \(cachedAttributes.count)")
     }
 }
