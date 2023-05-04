@@ -68,7 +68,7 @@ final class RMCharacterCollectionViewCell: UICollectionViewCell {
     
     private func setupConstraints() {
         
-        let cellWidth = RMCharactersView.columnWidth
+        let cellWidth = RMCharactersViewLayout.columnWidth
         
         NSLayoutConstraint.activate([
             imageView.widthAnchor.constraint(equalToConstant: cellWidth),
@@ -130,7 +130,7 @@ final class RMCharacterCollectionViewCell: UICollectionViewCell {
         let verticalConstraints: [NSLayoutConstraint] = dummyCell.contentView.constraints.filter({ ($0.firstAttribute == .top) || ($0.firstAttribute == .bottom) })
         totalHeight += verticalConstraints.reduce(0.0, { $0+abs($1.constant) })
         
-        let cellWidth = RMCharactersView.columnWidth
+        let cellWidth = RMCharactersViewLayout.columnWidth
         let imgConstraint: NSLayoutConstraint? = dummyCell.imageView.constraints.first(where: {
             ($0.firstAttribute == .height && $0.secondAttribute == .width) || ($0.firstAttribute == .width && $0.secondAttribute == .height)
         })

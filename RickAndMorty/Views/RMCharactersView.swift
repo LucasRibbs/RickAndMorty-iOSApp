@@ -16,18 +16,6 @@ final class RMCharactersView: UIView {
     
     public weak var delegate: RMCharactersViewDelegate?
     
-    public static let defaultSpacing: CGFloat = 5.0
-    public static let numberOfColumns: Int = 3
-    public static let footerHeight: CGFloat = 100.0
-    
-    public static var columnWidth: CGFloat {
-        let columns = CGFloat(numberOfColumns)
-        let spacing = defaultSpacing
-        let bounds = UIScreen.main.bounds
-        let columnWidth = (bounds.width-spacing*(columns+1))/columns
-        return columnWidth
-    }
-    
     private let charactersViewModel = RMCharactersViewModel()
     
     private let activityIndicator: UIActivityIndicatorView = {
@@ -96,6 +84,7 @@ final class RMCharactersView: UIView {
 extension RMCharactersView: RMCharacterViewModelDelegate {
     
     func didLoadInitialCharacters() {
+        
         collectionView.reloadData()
         
         self.activityIndicator.stopAnimating()
@@ -103,6 +92,16 @@ extension RMCharactersView: RMCharacterViewModelDelegate {
         UIView.animate(withDuration: 0.4, animations: {
             self.collectionView.alpha = 1.0
         })
+    }
+    
+    func didLoadAdditionalCharacters(at indexPaths: [IndexPath]) {
+        
+        guard let layout = collectionView.collectionViewLayout as? RMCharactersViewLayout else { return }
+        
+        collectionView.performBatchUpdates {
+            collectionView.insertItems(at: indexPaths)
+            layout.updateLayout()
+        }
     }
     
     func didSelectCharacter(_ character: RMCharacter) {
