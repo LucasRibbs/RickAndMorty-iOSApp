@@ -25,7 +25,7 @@ final class RMCharacterCollectionViewCell: UICollectionViewCell {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textColor = .label
-        label.font = .systemFont(ofSize: 18, weight: .medium)
+        label.font = .systemFont(ofSize: 16, weight: .medium)
         label.numberOfLines = 0
         label.lineBreakMode = .byWordWrapping
         label.setContentHuggingPriority(.defaultLow, for: .vertical)
@@ -37,7 +37,7 @@ final class RMCharacterCollectionViewCell: UICollectionViewCell {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textColor = .secondaryLabel
-        label.font = .systemFont(ofSize: 16, weight: .regular)
+        label.font = .systemFont(ofSize: 12, weight: .regular)
         label.setContentHuggingPriority(.defaultHigh, for: .vertical)
         
         return label
@@ -62,7 +62,8 @@ final class RMCharacterCollectionViewCell: UICollectionViewCell {
         contentView.layer.cornerRadius = 5
         contentView.layer.shadowColor = UIColor.secondaryLabel.cgColor
         contentView.layer.shadowOpacity = 0.4
-        contentView.layer.shadowOffset = CGSize(width: -4, height: 4)
+        contentView.layer.shadowRadius = 1.0
+        contentView.layer.shadowOffset = CGSize(width: -3, height: 3)
     }
     
     private func setupConstraints() {
@@ -104,7 +105,7 @@ final class RMCharacterCollectionViewCell: UICollectionViewCell {
     public func configure(with viewModel: RMCharacterCollectionViewCellModel) {
         
         nameLabel.text = viewModel.characterName
-        statusLabel.text = viewModel.characterStatus.string
+        statusLabel.text = viewModel.characterStatusText
         viewModel.fetchCharacterImage { [weak self] result in
             switch result {
             case .success(let data):
@@ -120,11 +121,12 @@ final class RMCharacterCollectionViewCell: UICollectionViewCell {
         }
     }
     
+    private static let dummyCell = RMCharacterCollectionViewCell(frame: .zero)
+    
     public static func intrinsicHeight(with viewModel: RMCharacterCollectionViewCellModel) -> CGFloat {
         
         var totalHeight: CGFloat = 0.0
         
-        let dummyCell = RMCharacterCollectionViewCell(frame: .zero)
         let verticalConstraints: [NSLayoutConstraint] = dummyCell.contentView.constraints.filter({ ($0.firstAttribute == .top) || ($0.firstAttribute == .bottom) })
         totalHeight += verticalConstraints.reduce(0.0, { $0+abs($1.constant) })
         

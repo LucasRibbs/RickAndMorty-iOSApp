@@ -10,7 +10,7 @@ import UIKit
 extension String {
     
     func sizeWithFont(_ font: UIFont, lineBreakMode: NSLineBreakMode, constrainedToSize size: CGSize) -> CGSize {
-        
+                
         let dummyLabel: UILabel = {
             let label = UILabel(frame: CGRect(origin: .zero, size: size))
             label.text = self

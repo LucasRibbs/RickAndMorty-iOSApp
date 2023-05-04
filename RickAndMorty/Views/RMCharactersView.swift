@@ -16,8 +16,8 @@ final class RMCharactersView: UIView {
     
     public weak var delegate: RMCharactersViewDelegate?
     
-    public static let defaultSpacing: CGFloat = 10.0
-    public static let numberOfColumns: Int = 2
+    public static let defaultSpacing: CGFloat = 5.0
+    public static let numberOfColumns: Int = 3
     public static let footerHeight: CGFloat = 100.0
     
     public static var columnWidth: CGFloat {
