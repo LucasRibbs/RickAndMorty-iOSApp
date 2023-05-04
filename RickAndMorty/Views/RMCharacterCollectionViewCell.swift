@@ -15,7 +15,9 @@ final class RMCharacterCollectionViewCell: UICollectionViewCell {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.contentMode = .scaleAspectFill
-
+        imageView.clipsToBounds = true
+        imageView.layer.cornerRadius = 5
+        
         return imageView
     }()
     
@@ -24,8 +26,8 @@ final class RMCharacterCollectionViewCell: UICollectionViewCell {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textColor = .label
         label.font = .systemFont(ofSize: 18, weight: .medium)
-        label.numberOfLines = 2
-        label.lineBreakMode = .byTruncatingTail
+        label.numberOfLines = 0
+        label.lineBreakMode = .byWordWrapping
         label.setContentHuggingPriority(.defaultLow, for: .vertical)
         
         return label
@@ -45,8 +47,9 @@ final class RMCharacterCollectionViewCell: UICollectionViewCell {
         super.init(frame: frame)
         
         contentView.backgroundColor = .secondarySystemBackground
+        setupLayer()
         contentView.addSubviews(imageView, nameLabel, statusLabel)
-        setUpConstraints()
+        setupConstraints()
     }
     
     required init?(coder: NSCoder) {
@@ -54,12 +57,17 @@ final class RMCharacterCollectionViewCell: UICollectionViewCell {
         fatalError("Not supported")
     }
     
-    private func setUpConstraints() {
+    private func setupLayer() {
         
-        let columns = CGFloat(RMCharactersView.numberOfColumns)
-        let spacing = RMCharactersView.defaultSpacing
-        let bounds = UIScreen.main.bounds
-        let cellWidth = (bounds.width-spacing*(columns+1))/columns
+        contentView.layer.cornerRadius = 5
+        contentView.layer.shadowColor = UIColor.secondaryLabel.cgColor
+        contentView.layer.shadowOpacity = 0.4
+        contentView.layer.shadowOffset = CGSize(width: -4, height: 4)
+    }
+    
+    private func setupConstraints() {
+        
+        let cellWidth = RMCharactersView.columnWidth
         
         NSLayoutConstraint.activate([
             imageView.widthAnchor.constraint(equalToConstant: cellWidth),
@@ -68,15 +76,21 @@ final class RMCharacterCollectionViewCell: UICollectionViewCell {
             imageView.leftAnchor.constraint(equalTo: contentView.leftAnchor),
             imageView.rightAnchor.constraint(equalTo: contentView.rightAnchor),
             
-            nameLabel.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 5),
+            nameLabel.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 10),
             nameLabel.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 5),
             nameLabel.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -5),
             
-            statusLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor),
+            statusLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 5),
             statusLabel.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 5),
             statusLabel.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -5),
-            statusLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -5)
+            statusLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -10)
         ])
+    }
+    
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        
+        setupLayer()
     }
     
     override func prepareForReuse() {
@@ -104,5 +118,29 @@ final class RMCharacterCollectionViewCell: UICollectionViewCell {
                 break
             }
         }
+    }
+    
+    public static func intrinsicHeight(with viewModel: RMCharacterCollectionViewCellModel) -> CGFloat {
+        
+        var totalHeight: CGFloat = 0.0
+        
+        let dummyCell = RMCharacterCollectionViewCell(frame: .zero)
+        let verticalConstraints: [NSLayoutConstraint] = dummyCell.contentView.constraints.filter({ ($0.firstAttribute == .top) || ($0.firstAttribute == .bottom) })
+        totalHeight += verticalConstraints.reduce(0.0, { $0+abs($1.constant) })
+        
+        let cellWidth = RMCharactersView.columnWidth
+        let imgConstraint: NSLayoutConstraint? = dummyCell.imageView.constraints.first(where: {
+            ($0.firstAttribute == .height && $0.secondAttribute == .width) || ($0.firstAttribute == .width && $0.secondAttribute == .height)
+        })
+        totalHeight += cellWidth*(imgConstraint?.multiplier ?? 1.0)
+        
+        let referenceSize = CGSize(width: cellWidth-10.0, height: CGFloat.greatestFiniteMagnitude)
+        let name = viewModel.characterName
+        let status = viewModel.characterStatusText
+        let nameCalculatedSize = name.sizeWithFont(dummyCell.nameLabel.font, lineBreakMode: .byWordWrapping, constrainedToSize: referenceSize)
+        let statusCalculatedSize = status.sizeWithFont(dummyCell.statusLabel.font, lineBreakMode: .byWordWrapping, constrainedToSize: referenceSize)
+        totalHeight += nameCalculatedSize.height + statusCalculatedSize.height
+        
+        return totalHeight
     }
 }

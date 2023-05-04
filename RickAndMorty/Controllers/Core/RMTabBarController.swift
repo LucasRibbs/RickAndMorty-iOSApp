@@ -12,10 +12,10 @@ final class RMTabBarController: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        setUpViewControllers()
+        setupViewControllers()
     }
 
-    private func setUpViewControllers() {
+    private func setupViewControllers() {
         
         let charactersVC = RMCharactersViewController()
         let locationsVC = RMLocationsViewController()

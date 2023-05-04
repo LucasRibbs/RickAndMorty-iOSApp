@@ -13,7 +13,7 @@ final class RMCharacterCollectionViewCellModel {
     public let characterName: String
     public let characterStatus: RMCharacterStatus
     
-    init(characterImageUrl: URL?, characterName: String, characterStatus: RMCharacterStatus) {
+    init(characterName: String, characterStatus: RMCharacterStatus, characterImageUrl: URL?) {
         
         self.characterImageUrl = characterImageUrl
         self.characterName = characterName
@@ -22,7 +22,7 @@ final class RMCharacterCollectionViewCellModel {
     
     public var characterStatusText: String {
         
-        return characterStatus.rawValue
+        return "Status: \(characterStatus.string)"
     }
     
     public func fetchCharacterImage(completion: @escaping (Result<Data,Error>) -> Void) {
