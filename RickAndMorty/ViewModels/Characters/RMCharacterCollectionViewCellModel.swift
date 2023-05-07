@@ -26,24 +26,12 @@ final class RMCharacterCollectionViewCellModel {
     }
     
     public func fetchCharacterImage(completion: @escaping (Result<Data,Error>) -> Void) {
-        //
-        //TODO: Abstrair método em algum Image Manager
-        //
+
         guard let url = characterImageUrl else {
             completion(.failure(URLError(.badURL)))
             return
         }
         
         RMImageLoader.shared.fetchImage(url, completion: completion)
-        
-//        let urlRequest = URLRequest(url: url)
-//        let task = URLSession.shared.dataTask(with: urlRequest) { data, _, error in
-//            guard let data = data, error == nil else {
-//                completion(.failure(error ?? URLError(.badServerResponse)))
-//                return
-//            }
-//            completion(.success(data))
-//        }
-//        task.resume()
     }
 }

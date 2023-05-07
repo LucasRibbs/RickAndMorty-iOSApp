@@ -39,8 +39,8 @@ extension RMCharactersViewController: RMCharactersViewDelegate {
     
     func charactersView(_ charactersView: RMCharactersView, didSelectCharacter character: RMCharacter) {
         //Open detail controller for given character
-        let characterViewModel = RMCharacterViewModel(character: character)
-        let characterVC = RMCharacterViewController(characterViewModel: characterViewModel)
+//        let characterViewModel = RMCharacterViewModel(character: character)
+        let characterVC = RMCharacterViewController(character: character)
         characterVC.navigationItem.largeTitleDisplayMode = .never
         navigationController?.pushViewController(characterVC, animated: true)
     }

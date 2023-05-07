@@ -9,11 +9,15 @@ import UIKit
 
 final class RMCharacterViewController: UIViewController {
     
-    private let characterViewModel: RMCharacterViewModel
+    private let characterView: RMCharacterView
     
-    init(characterViewModel: RMCharacterViewModel) {
-        self.characterViewModel = characterViewModel
+    init(character: RMCharacter) {
+        let characterViewModel = RMCharacterViewModel(character: character)
+        self.characterView = RMCharacterView(characterViewModel: characterViewModel)
+        
         super.init(nibName: nil, bundle: nil)
+        
+        title = characterViewModel.title
     }
     
     required init?(coder: NSCoder) {
@@ -24,6 +28,24 @@ final class RMCharacterViewController: UIViewController {
         super.viewDidLoad()
         
         view.backgroundColor = .systemBackground
-        title = characterViewModel.title
+        view.addSubview(characterView)
+        setupConstraints()
+        
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(didTapShare))
+    }
+    
+    @objc private func didTapShare() {
+        
+        
+    }
+    
+    private func setupConstraints() {
+        
+        NSLayoutConstraint.activate([
+            characterView.topAnchor.constraint(equalTo: view.topAnchor),
+            characterView.leftAnchor.constraint(equalTo: view.leftAnchor),
+            characterView.rightAnchor.constraint(equalTo: view.rightAnchor),
+            characterView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+        ])
     }
 }

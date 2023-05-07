@@ -20,13 +20,13 @@ final class RMCharactersViewLayout: UICollectionViewLayout {
     private static let defaultSpacing: CGFloat = 5.0
     private static let numberOfColumns: Int = 3
     
-    public static var columnWidth: CGFloat {
+    public static let columnWidth: CGFloat = {
         let columns = CGFloat(RMCharactersViewLayout.numberOfColumns)
         let spacing = RMCharactersViewLayout.defaultSpacing
         let availableWidth = UIScreen.main.bounds.width
         let columnWidth = (availableWidth-spacing*(columns+1))/columns
         return columnWidth
-    }
+    }()
     
     private var cachedAttributes = [UICollectionViewLayoutAttributes]()
     
@@ -75,12 +75,11 @@ final class RMCharactersViewLayout: UICollectionViewLayout {
         let numberOfColumns: Int = RMCharactersViewLayout.numberOfColumns
         let columnWidth: CGFloat = RMCharactersViewLayout.columnWidth
         let footerHeight: CGFloat = delegate.collectionView(collectionView!, heightForFooterInSection: 0)
-        
-        print(yOffset)
-        
+                
         let i = cachedAttributes.count
-        print("Num of items: \(collectionView!.numberOfItems(inSection: 0))")
-        for item in i ..< collectionView!.numberOfItems(inSection: 0) {
+        let numOfItems = collectionView!.numberOfItems(inSection: 0)
+//        print("Num of items: \(numOfItems)")
+        for item in i ..< numOfItems {
             let column = item % numberOfColumns
             let indexPath = IndexPath(item: item, section: 0)
             
@@ -100,7 +99,6 @@ final class RMCharactersViewLayout: UICollectionViewLayout {
         attr.frame = CGRect(x: 0.0, y: contentHeight, width: contentWidth, height: footerHeight)
         contentHeight = max(contentHeight, attr.frame.maxY)
         cachedAttributes.append(attr)
-        
-        print("Attributes cache: \(cachedAttributes.count)")
+//        print("Attributes cache: \(cachedAttributes.count)")
     }
 }

@@ -124,6 +124,7 @@ extension RMCharactersViewModel: UICollectionViewDataSource, UICollectionViewDel
         }
         
         let footer = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: RMFooterLoadingCollectionReusableView.identifier, for: indexPath)
+        if(!shouldShowLoadMoreIndicator) { footer.isHidden = true }
         return footer
     }
     

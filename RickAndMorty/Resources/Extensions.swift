@@ -27,6 +27,27 @@ extension String {
     }
 }
 
+extension UIImage {
+    
+    func blurredImage() -> UIImage {
+        
+        let context = CIContext(options: nil)
+        
+        let currentFilter = CIFilter(name: "CIGaussianBlur")!
+        let beginImage = CIImage(image: self)!
+        currentFilter.setValue(beginImage, forKey: kCIInputImageKey)
+        currentFilter.setValue(10, forKey: kCIInputRadiusKey)
+
+        let cropFilter = CIFilter(name: "CICrop")!
+        cropFilter.setValue(currentFilter.outputImage, forKey: kCIInputImageKey)
+        cropFilter.setValue(CIVector(cgRect: beginImage.extent), forKey: "inputRectangle")
+
+        let output = cropFilter.outputImage!
+        let cgimg = context.createCGImage(output, from: output.extent)!
+        let blurredImage = UIImage(cgImage: cgimg)
+        return blurredImage
+    }
+}
 
 extension UIView {
     
@@ -35,5 +56,21 @@ extension UIView {
         views.forEach({
             addSubview($0)
         })
+    }
+}
+
+extension UIImageView {
+    
+    func addBlur() {
+        // create effect
+        let effect = UIBlurEffect(style: .regular)
+        let effectView = UIVisualEffectView(effect: effect)
+        
+        // set boundry and alpha
+        effectView.frame = self.bounds
+        effectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        effectView.alpha = 1.0
+        
+        self.addSubview(effectView)
     }
 }

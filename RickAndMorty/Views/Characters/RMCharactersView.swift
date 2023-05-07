@@ -98,9 +98,6 @@ extension RMCharactersView: RMCharacterViewModelDelegate {
         
         guard let layout = collectionView.collectionViewLayout as? RMCharactersViewLayout else { return }
         
-//        collectionView.reloadData()
-//        layout.updateLayout()
-        
         collectionView.performBatchUpdates({
             collectionView.insertItems(at: indexPaths)
             layout.invalidateLayout()

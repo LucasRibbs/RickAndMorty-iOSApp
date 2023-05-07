@@ -9,7 +9,7 @@ import UIKit
 
 final class RMCharacterCollectionViewCell: UICollectionViewCell {
     
-    static let cellIdentifier = "RMCharacterCollectionViewCellIdentifier"
+    public static let cellIdentifier = "RMCharacterCollectionViewCellIdentifier"
     
     private let imageView: UIImageView = {
         let imageView = UIImageView()
@@ -102,12 +102,12 @@ final class RMCharacterCollectionViewCell: UICollectionViewCell {
         statusLabel.text = nil
     }
     
-    public func configure(with viewModel: RMCharacterCollectionViewCellModel) {
+    public func configure(with cellModel: RMCharacterCollectionViewCellModel) {
         
-        nameLabel.text = viewModel.characterName
-        statusLabel.text = viewModel.characterStatusText
+        nameLabel.text = cellModel.characterName
+        statusLabel.text = cellModel.characterStatusText
         
-        viewModel.fetchCharacterImage { [weak self] result in
+        cellModel.fetchCharacterImage { [weak self] result in
             switch result {
             case .success(let data):
                 DispatchQueue.main.async {
