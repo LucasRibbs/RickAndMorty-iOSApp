@@ -21,6 +21,10 @@ struct RMCharacter: Codable {
     let episode: [String]
     let url: String
     let created: String
+    
+    var episodeCount: String {
+        return "\(episode.count) \(episode.count>1 ? "episodes" : "episode")"
+    }
 }
 
 enum RMCharacterStatus: String, Codable {

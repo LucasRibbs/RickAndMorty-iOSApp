@@ -44,29 +44,17 @@ final class RMCharacterViewModel: NSObject {
     
     private func setupSections() {
         
-        /*let name: String
-         let status: RMCharacterStatus
-         let species: String
-         let type: String
-         let gender: RMCharacterGender
-         let origin: RMCharacterLocation
-         let location: RMCharacterLocation
-         let image: String
-         let episode: [String]
-         let url: String
-         let created: String*/
-        
         sectionTypes = [
             .image(cellModel: RMCharacterImageCollectionViewCellModel(imageUrl: character.image)),
             .information(cellModels: [
-                RMCharacterInformationCollectionViewCellModel(title: "Status", value: character.status.string),
-                RMCharacterInformationCollectionViewCellModel(title: "Gender", value: character.gender.string),
-                RMCharacterInformationCollectionViewCellModel(title: "Species", value: character.species),
-                RMCharacterInformationCollectionViewCellModel(title: "Type", value: character.type),
-                RMCharacterInformationCollectionViewCellModel(title: "Origin", value: character.origin.name),
-                RMCharacterInformationCollectionViewCellModel(title: "Location", value: character.location.name),
-                RMCharacterInformationCollectionViewCellModel(title: "Created", value: character.created),
-                RMCharacterInformationCollectionViewCellModel(title: "Total episodes", value: "\(character.episode.count)")
+                RMCharacterInformationCollectionViewCellModel(infoType: .status, value: character.status.string),
+                RMCharacterInformationCollectionViewCellModel(infoType: .gender, value: character.gender.string),
+                RMCharacterInformationCollectionViewCellModel(infoType: .species, value: character.species),
+                RMCharacterInformationCollectionViewCellModel(infoType: .type, value: character.type),
+                RMCharacterInformationCollectionViewCellModel(infoType: .origin, value: character.origin.name),
+                RMCharacterInformationCollectionViewCellModel(infoType: .location, value: character.location.name),
+                RMCharacterInformationCollectionViewCellModel(infoType: .created, value: character.created),
+                RMCharacterInformationCollectionViewCellModel(infoType: .totalEpisodes, value: character.episodeCount)
             ]),
             .episode(cellModels: character.episode.map({ episodeUrl in
                 RMCharacterEpisodeCollectionViewCellModel(episodeUrl: episodeUrl)
@@ -101,20 +89,20 @@ final class RMCharacterViewModel: NSObject {
         let item = NSCollectionLayoutItem(
             layoutSize: NSCollectionLayoutSize(
                 widthDimension: .fractionalWidth(0.5),
-                heightDimension: .fractionalHeight(1.0)
+                heightDimension: .absolute(125)
             )
         )
         item.contentInsets = NSDirectionalEdgeInsets(top: 2.5, leading: 2.5, bottom: 2.5, trailing: 2.5)
         let group = NSCollectionLayoutGroup.horizontal(
             layoutSize: NSCollectionLayoutSize(
                 widthDimension: .fractionalWidth(1.0),
-                heightDimension: .fractionalWidth(0.5)
+                heightDimension: .absolute(125)
             ),
             subitems: [item, item]
         )
 //        group.contentInsets = NSDirectionalEdgeInsets(top: 2.5, leading: 2.5, bottom: 2.5, trailing: 2.5)
         let section = NSCollectionLayoutSection(group: group)
-        section.contentInsets = NSDirectionalEdgeInsets(top: 2.5, leading: 2.5, bottom: 2.5, trailing: 2.5)
+        section.contentInsets = NSDirectionalEdgeInsets(top: 7.5, leading: 2.5, bottom: 2.5, trailing: 2.5)
         return section
     }
     
@@ -130,13 +118,13 @@ final class RMCharacterViewModel: NSObject {
         let group = NSCollectionLayoutGroup.horizontal(
             layoutSize: NSCollectionLayoutSize(
                 widthDimension: .fractionalWidth(0.75),
-                heightDimension: .absolute(150)
+                heightDimension: .absolute(145)
             ),
             subitems: [item]
         )
         group.contentInsets = NSDirectionalEdgeInsets(top: 0.0, leading: 2.5, bottom: 0.0, trailing: 2.5)
         let section = NSCollectionLayoutSection(group: group)
-        section.contentInsets = NSDirectionalEdgeInsets(top: 0.0, leading: 2.5, bottom: 5.0, trailing: 2.5)
+        section.contentInsets = NSDirectionalEdgeInsets(top: 5.0, leading: 2.5, bottom: 10.0, trailing: 2.5)
         section.orthogonalScrollingBehavior = .groupPagingCentered
         return section
     }
@@ -174,6 +162,7 @@ extension RMCharacterViewModel: UICollectionViewDelegate, UICollectionViewDataSo
             
             cell.configure(with: cellModel)
             return cell
+            
         case .information(let cellModels):
             guard let cell = collectionView.dequeueReusableCell(
                 withReuseIdentifier: RMCharacterInformationCollectionViewCell.cellIdentifier,
@@ -181,8 +170,8 @@ extension RMCharacterViewModel: UICollectionViewDelegate, UICollectionViewDataSo
             ) as? RMCharacterInformationCollectionViewCell else { fatalError() }
             
             cell.configure(with: cellModels[indexPath.item])
-            cell.backgroundColor = .systemGreen
             return cell
+            
         case .episode(let cellModels):
             guard let cell = collectionView.dequeueReusableCell(
                 withReuseIdentifier: RMCharacterEpisodeCollectionViewCell.cellIdentifier,
@@ -190,7 +179,6 @@ extension RMCharacterViewModel: UICollectionViewDelegate, UICollectionViewDataSo
             ) as? RMCharacterEpisodeCollectionViewCell else { fatalError() }
             
             cell.configure(with: cellModels[indexPath.item])
-            cell.backgroundColor = .systemBlue
             return cell
         }
     }

@@ -25,6 +25,13 @@ extension String {
         
         return dummyLabel.frame.size
     }
+    
+    var capitalizedSentence: String {
+        
+        let firstLetter = self.prefix(1).uppercased()
+        let remainingLetters = self.dropFirst()
+        return firstLetter + remainingLetters
+    }
 }
 
 extension UIImage {

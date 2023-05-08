@@ -61,14 +61,13 @@ final class RMCharactersViewModel: NSObject {
         
         let strong_self = self
         isLoadingCharacters = true
-//        print("Fetching more characters")
         
         let request = RMRequest(url: nextUrl)!
         RMService.shared.execute(request, expecting: RMAllCharactersResponse.self) { [weak self] result in
             switch result {
-            case .success(let charactersResponse):
-                let info = charactersResponse.info
-                let results = charactersResponse.results
+            case .success(let allCharactersResponse):
+                let info = allCharactersResponse.info
+                let results = allCharactersResponse.results
                 
                 let firstIdx = strong_self.characters.count
                 let lastIdx = strong_self.characters.count + results.count - 1
@@ -161,22 +160,8 @@ extension RMCharactersViewModel: UIScrollViewDelegate {
         let scrollViewHeight = scrollView.frame.height
 
         if(contentOffsetY >= contentHeight-scrollViewHeight-100.0) {
-            print("Should start fetching more characters")
-
+//            print("Should start fetching more characters")
             fetchAdditionalCharacters()
         }
-//
-//        Timer.scheduledTimer(withTimeInterval: 0.2, repeats: false) { [weak self] t in
-//            let contentOffsetY = scrollView.contentOffset.y
-//            let contentHeight = scrollView.contentSize.height
-//            let scrollViewHeight = scrollView.frame.height
-//
-//            if(contentOffsetY >= contentHeight-scrollViewHeight-100.0) {
-//
-//                self?.fetchAdditionalCharacters()
-//            }
-//
-//            t.invalidate()
-//        }
     }
 }

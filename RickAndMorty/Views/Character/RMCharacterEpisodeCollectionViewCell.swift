@@ -11,20 +11,51 @@ final class RMCharacterEpisodeCollectionViewCell: UICollectionViewCell {
 
     public static let cellIdentifier = "RMCharacterEpisodeCollectionViewCellIdentifier"
     
-    private let imageView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.contentMode = .scaleAspectFill
-        imageView.clipsToBounds = true
-        imageView.layer.cornerRadius = 5
+    private let episodeLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.textColor = .secondaryLabel
+        label.font = .systemFont(ofSize: 20, weight: .semibold)
+        label.numberOfLines = 1
+        label.lineBreakMode = .byWordWrapping
+        label.textAlignment = .center
+        label.setContentHuggingPriority(.defaultHigh, for: .vertical)
         
-        return imageView
+        return label
+    }()
+    
+    private let nameLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.textColor = .label
+        label.font = .systemFont(ofSize: 22, weight: .regular)
+        label.numberOfLines = 0
+        label.lineBreakMode = .byWordWrapping
+        label.textAlignment = .center
+        
+        return label
+    }()
+    
+    private let airDateLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.textColor = .secondaryLabel
+        label.font = .systemFont(ofSize: 18, weight: .light)
+        label.numberOfLines = 1
+        label.lineBreakMode = .byWordWrapping
+        label.textAlignment = .center
+        
+        return label
     }()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        contentView.addSubview(imageView)
+        contentView.backgroundColor = .secondarySystemBackground
+        contentView.layer.cornerRadius = 5
+        contentView.layer.borderWidth = 1
+        contentView.layer.borderColor = UIColor.gray.cgColor
+        contentView.addSubviews(episodeLabel, nameLabel, airDateLabel)
         setupConstraints()
     }
     
@@ -32,18 +63,41 @@ final class RMCharacterEpisodeCollectionViewCell: UICollectionViewCell {
         fatalError("Not supported!")
     }
     
-    public func configure(with: RMCharacterEpisodeCollectionViewCellModel) {
+    override func prepareForReuse() {
+        super.prepareForReuse()
         
+        episodeLabel.text = nil
+        nameLabel.text = nil
+        airDateLabel.text = nil
+    }
+    
+    public func configure(with cellModel: RMCharacterEpisodeCollectionViewCellModel) {
         
+        cellModel.fetchEpisode { [weak self] episode in
+            
+            self?.episodeLabel.text = "Episode: " + episode.episode
+            self?.nameLabel.text = episode.name
+            self?.airDateLabel.text = "Aired on " + episode.air_date
+        }
     }
     
     private func setupConstraints() {
         
         NSLayoutConstraint.activate([
-            imageView.topAnchor.constraint(equalTo: contentView.topAnchor),
-            imageView.leftAnchor.constraint(equalTo: contentView.leftAnchor),
-            imageView.rightAnchor.constraint(equalTo: contentView.rightAnchor),
-            imageView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
+            episodeLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 10),
+            episodeLabel.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 10),
+            episodeLabel.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -10),
+//            episodeLabel.heightAnchor.constraint(equalTo: contentView.heightAnchor, multiplier: 1/3),
+            
+            nameLabel.topAnchor.constraint(equalTo: episodeLabel.bottomAnchor),
+            nameLabel.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 10),
+            nameLabel.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -10),
+//            nameLabel.heightAnchor.constraint(equalTo: contentView.heightAnchor, multiplier: 1/3),
+            
+            airDateLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor),
+            airDateLabel.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 10),
+            airDateLabel.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -10),
+            airDateLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -10)
         ])
     }
 }
