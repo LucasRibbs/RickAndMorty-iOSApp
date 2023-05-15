@@ -32,6 +32,8 @@ final class RMCharacterViewController: UIViewController {
         setupConstraints()
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(didTapShare))
+        
+        characterView.delegate = self
     }
     
     @objc private func didTapShare() {
@@ -47,5 +49,16 @@ final class RMCharacterViewController: UIViewController {
             characterView.rightAnchor.constraint(equalTo: view.rightAnchor),
             characterView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
+    }
+}
+
+// MARK: - RMCharacterViewDelegate
+extension RMCharacterViewController: RMCharacterViewDelegate {
+    
+    func characterView(_ characterView: RMCharacterView, didSelectEpisode episode: RMEpisode) {
+        
+        let episodeViewController = RMEpisodeViewController(episode: episode)
+        episodeViewController.hidesBottomBarWhenPushed = true
+        navigationController?.pushViewController(episodeViewController, animated: true)
     }
 }

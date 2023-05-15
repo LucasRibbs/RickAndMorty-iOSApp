@@ -18,7 +18,7 @@ final class RMCharacterEpisodeCollectionViewCellModel {
     
     private let episodeUrl: String
     
-    private var cachedEpisode: RMEpisodeRender? = nil
+    public var cachedEpisode: RMEpisodeRender? = nil
     private var isFetching: Bool = false
     
     init(episodeUrl: String) {

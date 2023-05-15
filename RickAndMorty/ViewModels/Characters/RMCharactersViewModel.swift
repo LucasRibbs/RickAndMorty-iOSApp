@@ -7,7 +7,7 @@
 
 import UIKit
 
-protocol RMCharacterViewModelDelegate: AnyObject {
+protocol RMCharactersViewModelDelegate: AnyObject {
     
     func didLoadInitialCharacters()
     func didLoadAdditionalCharacters(at indexPaths: [IndexPath])
@@ -16,7 +16,7 @@ protocol RMCharacterViewModelDelegate: AnyObject {
 
 final class RMCharactersViewModel: NSObject {
     
-    public weak var delegate: RMCharacterViewModelDelegate?
+    public weak var delegate: RMCharactersViewModelDelegate?
     
     private var isLoadingCharacters: Bool = true
     

@@ -80,8 +80,8 @@ final class RMCharactersView: UIView {
     }
 }
 
-// MARK: - RMCharacterViewModelDelegate
-extension RMCharactersView: RMCharacterViewModelDelegate {
+// MARK: - RMCharactersViewModelDelegate
+extension RMCharactersView: RMCharactersViewModelDelegate {
     
     func didLoadInitialCharacters() {
         

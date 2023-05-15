@@ -7,7 +7,14 @@
 
 import UIKit
 
+protocol RMCharacterViewModelDelegate: AnyObject {
+    
+    func didSelectEpisode(_ episode: RMEpisode)
+}
+
 final class RMCharacterViewModel: NSObject {
+    
+    public weak var delegate: RMCharacterViewModelDelegate?
     
     private let character: RMCharacter
     
@@ -130,6 +137,7 @@ final class RMCharacterViewModel: NSObject {
     }
 }
 
+// MARK: - UICollectionViewDelegate, UICollectionViewDataSource
 extension RMCharacterViewModel: UICollectionViewDelegate, UICollectionViewDataSource {
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
@@ -180,6 +188,20 @@ extension RMCharacterViewModel: UICollectionViewDelegate, UICollectionViewDataSo
             
             cell.configure(with: cellModels[indexPath.item])
             return cell
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        collectionView.deselectItem(at: indexPath, animated: true)
+        
+        let sectionType = sectionTypes[indexPath.section]
+        switch sectionType {
+        case .episode(let cellModels):
+            guard let episode = cellModels[indexPath.item].cachedEpisode as? RMEpisode else { return }
+            delegate?.didSelectEpisode(episode)
+            return
+        default:
+            return
         }
     }
 }

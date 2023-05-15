@@ -7,7 +7,14 @@
 
 import UIKit
 
+protocol RMCharacterViewDelegate: AnyObject {
+    
+    func characterView(_ characterView: RMCharacterView, didSelectEpisode episode: RMEpisode)
+}
+
 final class RMCharacterView: UIView {
+    
+    public weak var delegate: RMCharacterViewDelegate?
     
     private let characterViewModel: RMCharacterViewModel
     
@@ -39,6 +46,8 @@ final class RMCharacterView: UIView {
         addSubviews(activityIndicator, collectionView)
         setupConstraints()
         setupCollectionView()
+        
+        characterViewModel.delegate = self
     }
     
     required init?(coder: NSCoder) {
@@ -71,5 +80,14 @@ final class RMCharacterView: UIView {
         collectionView.collectionViewLayout = layout
         collectionView.delegate = characterViewModel
         collectionView.dataSource = characterViewModel
+    }
+}
+
+// MARK: - RMCharacterViewModelDelegate
+extension RMCharacterView: RMCharacterViewModelDelegate {
+    
+    func didSelectEpisode(_ episode: RMEpisode) {
+        
+        delegate?.characterView(self, didSelectEpisode: episode)
     }
 }
