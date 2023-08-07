@@ -81,3 +81,22 @@ extension UIImageView {
         self.addSubview(effectView)
     }
 }
+
+extension UILabel {
+    
+    static func expectedHeight(withNumberOfLines numberOfLines: Int) -> CGFloat {
+        
+        let dummyLabel: UILabel = {
+            let label = UILabel(frame: .zero)
+            label.text = [String](repeating: "i", count: numberOfLines).joined(separator: "\n")
+            label.lineBreakMode = .byWordWrapping
+            label.numberOfLines = 0
+            
+            return label
+        }()
+        
+        dummyLabel.sizeToFit()
+        
+        return dummyLabel.frame.height
+    }
+}

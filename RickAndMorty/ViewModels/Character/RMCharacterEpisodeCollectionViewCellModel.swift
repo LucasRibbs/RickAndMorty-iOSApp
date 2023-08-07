@@ -27,11 +27,13 @@ final class RMCharacterEpisodeCollectionViewCellModel {
     
     public func fetchEpisode(completion: @escaping (RMEpisodeRender) -> Void) {
         guard !isFetching else { return }
+        
         if let episode = cachedEpisode {
 //            print("Episode loaded from cache")
             completion(episode)
             return
         }
+        
         guard let url = URL(string: episodeUrl), let request = RMRequest(url: url) else { return }
         
         isFetching = true

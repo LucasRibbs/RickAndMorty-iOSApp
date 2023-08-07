@@ -72,7 +72,7 @@ final class RMCharactersViewLayout: UICollectionViewLayout {
     private func setupLayout() {
                 
         let defaultSpacing: CGFloat = RMCharactersViewLayout.defaultSpacing
-        let numberOfColumns: Int = RMCharactersViewLayout.numberOfColumns
+//        let numberOfColumns: Int = RMCharactersViewLayout.numberOfColumns
         let columnWidth: CGFloat = RMCharactersViewLayout.columnWidth
         let footerHeight: CGFloat = delegate.collectionView(collectionView!, heightForFooterInSection: 0)
                 
@@ -80,7 +80,7 @@ final class RMCharactersViewLayout: UICollectionViewLayout {
         let numOfItems = collectionView!.numberOfItems(inSection: 0)
 //        print("Num of items: \(numOfItems)")
         for item in i ..< numOfItems {
-            let column = item % numberOfColumns
+            let column = yOffset.indices.min(by: { yOffset[$0]<yOffset[$1] })!
             let indexPath = IndexPath(item: item, section: 0)
             
             let cellWidth = columnWidth

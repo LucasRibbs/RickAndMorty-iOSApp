@@ -14,10 +14,17 @@ final class RMCharactersViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.backgroundColor = .systemBackground
         title = "Characters"
+        view.backgroundColor = .systemBackground
         
         setupView()
+        
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .search, target: self, action: #selector(didTapSearch))
+    }
+    
+    @objc private func didTapSearch() {
+        
+        
     }
     
     private func setupView() {
@@ -39,7 +46,6 @@ extension RMCharactersViewController: RMCharactersViewDelegate {
     
     func charactersView(_ charactersView: RMCharactersView, didSelectCharacter character: RMCharacter) {
         //Open detail controller for given character
-//        let characterViewModel = RMCharacterViewModel(character: character)
         let characterVC = RMCharacterViewController(character: character)
         characterVC.navigationItem.largeTitleDisplayMode = .never
         navigationController?.pushViewController(characterVC, animated: true)

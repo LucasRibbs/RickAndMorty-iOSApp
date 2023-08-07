@@ -26,7 +26,7 @@ final class RMService {
         if let cachedData = cacheManager.cachedResponse(for: request.endpoint, url: request.url) {
             do {
                 let json = try JSONDecoder().decode(type, from: cachedData)
-                print("Data recovered from cache!")
+//                print("Data recovered from cache!")
                 completion(.success(json))
             } catch {
                 completion(.failure(error))

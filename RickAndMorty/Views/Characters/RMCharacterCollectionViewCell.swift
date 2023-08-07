@@ -122,9 +122,9 @@ final class RMCharacterCollectionViewCell: UICollectionViewCell {
         }
     }
     
-    private static let dummyCell = RMCharacterCollectionViewCell(frame: .zero)
-    
     public static func intrinsicHeight(with viewModel: RMCharacterCollectionViewCellModel) -> CGFloat {
+        
+        let dummyCell = RMCharacterCollectionViewCell(frame: .zero)
         
         var totalHeight: CGFloat = 0.0
         

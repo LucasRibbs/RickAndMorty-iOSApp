@@ -30,6 +30,13 @@ final class RMEpisodeViewController: UIViewController {
         view.backgroundColor = .systemBackground
         view.addSubview(episodeView)
         setupConstraints()
+        
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(didTapShare))
+    }
+    
+    @objc private func didTapShare() {
+        
+        
     }
     
     private func setupConstraints() {

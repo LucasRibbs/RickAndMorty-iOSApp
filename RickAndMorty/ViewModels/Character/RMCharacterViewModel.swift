@@ -69,7 +69,7 @@ final class RMCharacterViewModel: NSObject {
         ]
     }
         
-    public static func collectionLayoutSectionForImageSection() -> NSCollectionLayoutSection {
+    private static func collectionLayoutSectionForImageSection() -> NSCollectionLayoutSection {
         
         let item = NSCollectionLayoutItem(
             layoutSize: NSCollectionLayoutSize(
