@@ -110,7 +110,7 @@ extension RMEpisodesViewModel: UICollectionViewDataSource, UICollectionViewDeleg
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: RMEpisodeCollectionViewCell.cellIdentifier, for: indexPath) as? RMEpisodeCollectionViewCell else {
             fatalError("Not supported cell")
         }
-        let cellModel = cellModels[indexPath.row]
+        let cellModel = cellModels[indexPath.item]
         cell.configure(with: cellModel)
         
         return cell

@@ -24,7 +24,9 @@ final class RMCharactersViewController: UIViewController {
     
     @objc private func didTapSearch() {
         
-        
+        let searchVC = RMSearchViewController(configuration: .character)
+        searchVC.navigationItem.largeTitleDisplayMode = .never
+        navigationController?.pushViewController(searchVC, animated: true)
     }
     
     private func setupView() {

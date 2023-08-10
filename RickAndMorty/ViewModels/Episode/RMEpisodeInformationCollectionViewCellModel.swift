@@ -1,31 +1,29 @@
 //
-//  RMCharacterInformationCollectionViewCellModel.swift
+//  RMEpisodeInformationCollectionViewCellModel.swift
 //  RickAndMorty
 //
-//  Created by  on 06/05/23.
+//  Created by  on 10/08/23.
 //
 
 import UIKit
 
-final class RMCharacterInformationCollectionViewCellModel {
+final class RMEpisodeInformationCollectionViewCellModel {
     
     private let infoType: InfoType
     private let value: String
     
     enum InfoType: String {
-        case status
-        case gender
-        case species
-        case type
-        case origin
-        case location
+        case name
+        case airDate
+        case episode
         case created
-        case totalEpisodes
         
         var title: String {
             switch self {
-            case .totalEpisodes:
-                return "TOTAL EPISODES"
+            case .name:
+                return "TITLE"
+            case .airDate:
+                return "AIR DATE"
             default:
                 return rawValue.uppercased()
             }
@@ -33,43 +31,27 @@ final class RMCharacterInformationCollectionViewCellModel {
         
         var icon: UIImage? {
             switch self {
-            case .status:
+            case .name:
                 return UIImage(systemName: "bell")
-            case .gender:
+            case .airDate:
                 return UIImage(systemName: "bell")
-            case .species:
-                return UIImage(systemName: "bell")
-            case .type:
-                return UIImage(systemName: "bell")
-            case .origin:
-                return UIImage(systemName: "bell")
-            case .location:
+            case .episode:
                 return UIImage(systemName: "bell")
             case .created:
-                return UIImage(systemName: "bell")
-            case .totalEpisodes:
                 return UIImage(systemName: "bell")
             }
         }
         
         var tintColor: UIColor {
             switch self {
-            case .status:
+            case .name:
                 return .systemBlue
-            case .gender:
-                return .systemRed
-            case .species:
-                return .systemPurple
-            case .type:
-                return .systemGreen
-            case .origin:
-                return .systemOrange
-            case .location:
-                return .systemPink
-            case .created:
+            case .airDate:
                 return .systemYellow
-            case .totalEpisodes:
-                return .systemIndigo
+            case .episode:
+                return .systemRed
+            case .created:
+                return .systemGreen
             }
         }
     }

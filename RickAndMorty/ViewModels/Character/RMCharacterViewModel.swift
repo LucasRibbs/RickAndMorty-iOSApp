@@ -32,7 +32,7 @@ final class RMCharacterViewModel: NSObject {
     enum SectionType {
         case image(cellModel: RMCharacterImageCollectionViewCellModel)
         case information(cellModels: [RMCharacterInformationCollectionViewCellModel])
-        case episode(cellModels: [RMCharacterEpisodeCollectionViewCellModel])
+        case episodes(cellModels: [RMCharacterEpisodeCollectionViewCellModel])
     }
     
     public var sectionTypes: [SectionType] = []
@@ -44,8 +44,8 @@ final class RMCharacterViewModel: NSObject {
             return collectionLayoutSectionForImageSection()
         case .information:
             return collectionLayoutSectionForInformationSection()
-        case .episode:
-            return collectionLayoutSectionForEpisodeSection()
+        case .episodes:
+            return collectionLayoutSectionForEpisodesSection()
         }
     }
     
@@ -63,7 +63,7 @@ final class RMCharacterViewModel: NSObject {
                 RMCharacterInformationCollectionViewCellModel(infoType: .created, value: character.created),
                 RMCharacterInformationCollectionViewCellModel(infoType: .totalEpisodes, value: character.episodeCount)
             ]),
-            .episode(cellModels: character.episode.map({ episodeUrl in
+            .episodes(cellModels: character.episode.map({ episodeUrl in
                 RMCharacterEpisodeCollectionViewCellModel(episodeUrl: episodeUrl)
             }))
         ]
@@ -113,7 +113,7 @@ final class RMCharacterViewModel: NSObject {
         return section
     }
     
-    private static func collectionLayoutSectionForEpisodeSection() -> NSCollectionLayoutSection {
+    private static func collectionLayoutSectionForEpisodesSection() -> NSCollectionLayoutSection {
         
         let item = NSCollectionLayoutItem(
             layoutSize: NSCollectionLayoutSize(
@@ -153,7 +153,7 @@ extension RMCharacterViewModel: UICollectionViewDelegate, UICollectionViewDataSo
             return 1
         case .information(let cellModels):
             return cellModels.count
-        case .episode(let cellModels):
+        case .episodes(let cellModels):
             return cellModels.count
         }
     }
@@ -180,7 +180,7 @@ extension RMCharacterViewModel: UICollectionViewDelegate, UICollectionViewDataSo
             cell.configure(with: cellModels[indexPath.item])
             return cell
             
-        case .episode(let cellModels):
+        case .episodes(let cellModels):
             guard let cell = collectionView.dequeueReusableCell(
                 withReuseIdentifier: RMCharacterEpisodeCollectionViewCell.cellIdentifier,
                 for: indexPath
@@ -196,7 +196,7 @@ extension RMCharacterViewModel: UICollectionViewDelegate, UICollectionViewDataSo
         
         let sectionType = sectionTypes[indexPath.section]
         switch sectionType {
-        case .episode(let cellModels):
+        case .episodes(let cellModels):
             guard let episode = cellModels[indexPath.item].cachedEpisode as? RMEpisode else { return }
             delegate?.didSelectEpisode(episode)
             return

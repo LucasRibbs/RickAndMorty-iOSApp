@@ -1,15 +1,15 @@
 //
-//  RMCharacterInformationCollectionViewCell.swift
+//  RMEpisodeInformationCollectionViewCell.swift
 //  RickAndMorty
 //
-//  Created by  on 06/05/23.
+//  Created by  on 10/08/23.
 //
 
 import UIKit
 
-final class RMCharacterInformationCollectionViewCell: UICollectionViewCell {
-
-    public static let cellIdentifier = "RMCharacterInformationCollectionViewCellIdentifier"
+class RMEpisodeInformationCollectionViewCell: UICollectionViewCell {
+    
+    public static let cellIdentifier = "RMEpisodeInformationCollectionViewCellIdentifier"
     
     private let titleLabel: UILabel = {
         let label = UILabel()
@@ -74,7 +74,7 @@ final class RMCharacterInformationCollectionViewCell: UICollectionViewCell {
         iconImageView.tintColor = .label
     }
     
-    public func configure(with cellModel: RMCharacterInformationCollectionViewCellModel) {
+    public func configure(with cellModel: RMEpisodeInformationCollectionViewCellModel) {
         
         titleLabel.text = cellModel.infoTitle
         titleLabel.textColor = cellModel.infoTintColor

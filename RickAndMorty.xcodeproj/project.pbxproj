@@ -10,6 +10,10 @@
 		8B127BF5298A0AC20043A313 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B127BF4298A0AC20043A313 /* Extensions.swift */; };
 		8B127BF8298A125B0043A313 /* RMCharacterCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B127BF7298A125B0043A313 /* RMCharacterCollectionViewCell.swift */; };
 		8B127BFA298A14390043A313 /* RMCharacterCollectionViewCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B127BF9298A14390043A313 /* RMCharacterCollectionViewCellModel.swift */; };
+		8B1729AB2A8566E7000125FC /* RMEpisodeInformationCollectionViewCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B1729AA2A8566E7000125FC /* RMEpisodeInformationCollectionViewCellModel.swift */; };
+		8B1729AF2A857C52000125FC /* RMEpisodeInformationCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B1729AE2A857C52000125FC /* RMEpisodeInformationCollectionViewCell.swift */; };
+		8B1729B12A857C67000125FC /* RMEpisodeCharacterCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B1729B02A857C67000125FC /* RMEpisodeCharacterCollectionViewCell.swift */; };
+		8B1729B32A858648000125FC /* RMDateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B1729B22A858648000125FC /* RMDateFormatter.swift */; };
 		8B1F37D12A0C169B004DCBFD /* RMEpisodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B1F37D02A0C169B004DCBFD /* RMEpisodeViewController.swift */; };
 		8B1F37D42A0C16E8004DCBFD /* RMEpisodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B1F37D32A0C16E8004DCBFD /* RMEpisodeView.swift */; };
 		8B1F37D72A0C1726004DCBFD /* RMEpisodeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B1F37D62A0C1726004DCBFD /* RMEpisodeViewModel.swift */; };
@@ -57,6 +61,10 @@
 		8B127BF4298A0AC20043A313 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		8B127BF7298A125B0043A313 /* RMCharacterCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RMCharacterCollectionViewCell.swift; sourceTree = "<group>"; };
 		8B127BF9298A14390043A313 /* RMCharacterCollectionViewCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RMCharacterCollectionViewCellModel.swift; sourceTree = "<group>"; };
+		8B1729AA2A8566E7000125FC /* RMEpisodeInformationCollectionViewCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RMEpisodeInformationCollectionViewCellModel.swift; sourceTree = "<group>"; };
+		8B1729AE2A857C52000125FC /* RMEpisodeInformationCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RMEpisodeInformationCollectionViewCell.swift; sourceTree = "<group>"; };
+		8B1729B02A857C67000125FC /* RMEpisodeCharacterCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RMEpisodeCharacterCollectionViewCell.swift; sourceTree = "<group>"; };
+		8B1729B22A858648000125FC /* RMDateFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RMDateFormatter.swift; sourceTree = "<group>"; };
 		8B1F37D02A0C169B004DCBFD /* RMEpisodeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RMEpisodeViewController.swift; sourceTree = "<group>"; };
 		8B1F37D32A0C16E8004DCBFD /* RMEpisodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RMEpisodeView.swift; sourceTree = "<group>"; };
 		8B1F37D62A0C1726004DCBFD /* RMEpisodeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RMEpisodeViewModel.swift; sourceTree = "<group>"; };
@@ -117,6 +125,8 @@
 			isa = PBXGroup;
 			children = (
 				8B1F37D32A0C16E8004DCBFD /* RMEpisodeView.swift */,
+				8B1729AE2A857C52000125FC /* RMEpisodeInformationCollectionViewCell.swift */,
+				8B1729B02A857C67000125FC /* RMEpisodeCharacterCollectionViewCell.swift */,
 			);
 			path = Episode;
 			sourceTree = "<group>";
@@ -125,6 +135,7 @@
 			isa = PBXGroup;
 			children = (
 				8B1F37D62A0C1726004DCBFD /* RMEpisodeViewModel.swift */,
+				8B1729AA2A8566E7000125FC /* RMEpisodeInformationCollectionViewCellModel.swift */,
 			);
 			path = Episode;
 			sourceTree = "<group>";
@@ -233,6 +244,7 @@
 			children = (
 				8B960C962A0434980086C3B1 /* RMImageLoader.swift */,
 				8BB76AAD2A0C1F5900004133 /* RMAPICacheManager.swift */,
+				8B1729B22A858648000125FC /* RMDateFormatter.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -425,15 +437,19 @@
 				8B4B88FF2A7C870900BA1096 /* RMSearchViewController.swift in Sources */,
 				8B781B0A2988954E008C7183 /* RMEpisode.swift in Sources */,
 				8B960CA42A0705EB0086C3B1 /* RMCharacterImageCollectionViewCellModel.swift in Sources */,
+				8B1729AF2A857C52000125FC /* RMEpisodeInformationCollectionViewCell.swift in Sources */,
 				8B781B062988952C008C7183 /* RMCharacter.swift in Sources */,
 				8B781AEF29888F84008C7183 /* RMTabBarController.swift in Sources */,
 				8B1F37D12A0C169B004DCBFD /* RMEpisodeViewController.swift in Sources */,
 				8B8FBE622A020EC300284DBA /* RMCharactersViewLayout.swift in Sources */,
 				8B781B082988953B008C7183 /* RMLocation.swift in Sources */,
 				8B5EB6312A18380500471A9D /* RMEpisodeCollectionViewCellModel.swift in Sources */,
+				8B1729AB2A8566E7000125FC /* RMEpisodeInformationCollectionViewCellModel.swift in Sources */,
 				8B8FBE5D2A01B91D00284DBA /* RMCharacterViewModel.swift in Sources */,
+				8B1729B12A857C67000125FC /* RMEpisodeCharacterCollectionViewCell.swift in Sources */,
 				8B1F37D72A0C1726004DCBFD /* RMEpisodeViewModel.swift in Sources */,
 				8B127BF8298A125B0043A313 /* RMCharacterCollectionViewCell.swift in Sources */,
+				8B1729B32A858648000125FC /* RMDateFormatter.swift in Sources */,
 				8B781B0F29889655008C7183 /* RMLocationsViewController.swift in Sources */,
 				8B5D58102989FCB700653C79 /* RMCharactersViewModel.swift in Sources */,
 				8B127BF5298A0AC20043A313 /* Extensions.swift in Sources */,
