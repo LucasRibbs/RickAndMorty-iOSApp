@@ -21,24 +21,11 @@ final class RMEpisodeInformationCollectionViewCellModel {
         var title: String {
             switch self {
             case .name:
-                return "TITLE"
+                return "EPISODE TITLE"
             case .airDate:
                 return "AIR DATE"
             default:
                 return rawValue.uppercased()
-            }
-        }
-        
-        var icon: UIImage? {
-            switch self {
-            case .name:
-                return UIImage(systemName: "bell")
-            case .airDate:
-                return UIImage(systemName: "bell")
-            case .episode:
-                return UIImage(systemName: "bell")
-            case .created:
-                return UIImage(systemName: "bell")
             }
         }
         
@@ -47,11 +34,11 @@ final class RMEpisodeInformationCollectionViewCellModel {
             case .name:
                 return .systemBlue
             case .airDate:
-                return .systemYellow
+                return .systemGreen
             case .episode:
                 return .systemRed
             case .created:
-                return .systemGreen
+                return .systemYellow
             }
         }
     }
@@ -75,11 +62,6 @@ final class RMEpisodeInformationCollectionViewCellModel {
             return RMDateFormatter.dateFormatter.string(from: date)
         }
         return value
-    }
-    
-    public var infoIcon: UIImage? {
-        
-        return infoType.icon
     }
     
     public var infoTintColor: UIColor {

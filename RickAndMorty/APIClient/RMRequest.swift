@@ -56,6 +56,7 @@ final class RMRequest {
     }
     
     convenience init?(url: URL?) {
+        
         guard var urlString = url?.absoluteString else { return nil }
         guard urlString.starts(with: RMRequest.baseUrl.absoluteString) else { return nil }
         

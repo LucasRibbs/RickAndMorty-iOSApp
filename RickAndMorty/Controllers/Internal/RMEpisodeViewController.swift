@@ -32,6 +32,8 @@ final class RMEpisodeViewController: UIViewController {
         setupConstraints()
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(didTapShare))
+        
+        episodeView.delegate = self
     }
     
     @objc private func didTapShare() {
@@ -47,5 +49,16 @@ final class RMEpisodeViewController: UIViewController {
             episodeView.rightAnchor.constraint(equalTo: view.rightAnchor),
             episodeView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
+    }
+}
+
+// MARK: - RMCharacterViewDelegate
+extension RMEpisodeViewController: RMEpisodeViewDelegate {
+    
+    func episodeView(_ episodeView: RMEpisodeView, didSelectCharacter character: RMCharacter) {
+        
+        let characterVC = RMCharacterViewController(character: character)
+        characterVC.navigationItem.largeTitleDisplayMode = .never
+        navigationController?.pushViewController(characterVC, animated: true)
     }
 }

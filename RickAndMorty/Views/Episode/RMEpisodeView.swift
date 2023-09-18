@@ -7,7 +7,14 @@
 
 import UIKit
 
+protocol RMEpisodeViewDelegate: AnyObject {
+    
+    func episodeView(_ episodeView: RMEpisodeView, didSelectCharacter character: RMCharacter)
+}
+
 final class RMEpisodeView: UIView {
+    
+    public weak var delegate: RMEpisodeViewDelegate?
 
     private let episodeViewModel: RMEpisodeViewModel
     
@@ -88,5 +95,6 @@ extension RMEpisodeView: RMEpisodeViewModelDelegate {
     
     func didSelectCharacter(_ character: RMCharacter) {
         
+        delegate?.episodeView(self, didSelectCharacter: character)
     }
 }

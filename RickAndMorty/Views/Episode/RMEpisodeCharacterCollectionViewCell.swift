@@ -65,7 +65,7 @@ class RMEpisodeCharacterCollectionViewCell: UICollectionViewCell {
         contentView.layer.shadowColor = UIColor.secondaryLabel.cgColor
         contentView.layer.shadowOpacity = 0.4
         contentView.layer.shadowRadius = 1.0
-        contentView.layer.shadowOffset = CGSize(width: 3, height: 3)
+        contentView.layer.shadowOffset = CGSize(width: 0, height: -3)
     }
     
     private func setupConstraints() {

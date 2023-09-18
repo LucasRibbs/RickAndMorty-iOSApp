@@ -18,7 +18,7 @@ class RMEpisodeInformationCollectionViewCell: UICollectionViewCell {
         label.textColor = .label
         label.font = .systemFont(ofSize: 18, weight: .semibold)
         label.numberOfLines = 0
-        label.lineBreakMode = .byWordWrapping
+        label.lineBreakMode = .byTruncatingTail
         label.textAlignment = .center
         
         return label
@@ -31,20 +31,10 @@ class RMEpisodeInformationCollectionViewCell: UICollectionViewCell {
         label.font = .systemFont(ofSize: 16, weight: .medium)
         label.numberOfLines = 0
         label.lineBreakMode = .byTruncatingTail
-        label.textAlignment = .left
+        label.textAlignment = .center
         label.adjustsFontSizeToFitWidth = true
         
         return label
-    }()
-    
-    private let iconImageView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.contentMode = .scaleAspectFit
-        imageView.clipsToBounds = true
-        imageView.image = UIImage(systemName: "globe")
-        
-        return imageView
     }()
     
     override init(frame: CGRect) {
@@ -55,7 +45,7 @@ class RMEpisodeInformationCollectionViewCell: UICollectionViewCell {
         contentView.layer.borderWidth = 1
         contentView.layer.borderColor = UIColor.gray.cgColor
         contentView.layer.masksToBounds = true
-        contentView.addSubviews(titleLabel, valueLabel, iconImageView)
+        contentView.addSubviews(titleLabel, valueLabel)
         setupConstraints()
     }
     
@@ -70,8 +60,6 @@ class RMEpisodeInformationCollectionViewCell: UICollectionViewCell {
         titleLabel.textColor = .label
         valueLabel.text = nil
         valueLabel.font = .systemFont(ofSize: 16, weight: .medium)
-        iconImageView.image = nil
-        iconImageView.tintColor = .label
     }
     
     public func configure(with cellModel: RMEpisodeInformationCollectionViewCellModel) {
@@ -84,29 +72,20 @@ class RMEpisodeInformationCollectionViewCell: UICollectionViewCell {
             valueLabel.text = "None"
             valueLabel.font = .italicSystemFont(ofSize: 14)
         }
-        iconImageView.image = cellModel.infoIcon
-        iconImageView.tintColor = cellModel.infoTintColor
     }
     
     private func setupConstraints() {
         
         NSLayoutConstraint.activate([
-            iconImageView.heightAnchor.constraint(equalToConstant: 25),
-            iconImageView.widthAnchor.constraint(equalToConstant: 25),
-            iconImageView.centerYAnchor.constraint(equalTo: valueLabel.centerYAnchor),
-            iconImageView.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 15),
-            iconImageView.topAnchor.constraint(greaterThanOrEqualTo: contentView.topAnchor, constant: 10),
-            iconImageView.bottomAnchor.constraint(lessThanOrEqualTo: titleLabel.topAnchor, constant: -10),
+            titleLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 0),
+            titleLabel.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 0),
+            titleLabel.trailingAnchor.constraint(equalTo: contentView.centerXAnchor, constant: 0),
+            titleLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: 0),
                 
-            valueLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 10),
-            valueLabel.leftAnchor.constraint(equalTo: iconImageView.rightAnchor, constant: 10),
-            valueLabel.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -5),
-            valueLabel.bottomAnchor.constraint(equalTo: titleLabel.topAnchor, constant: -10),
-            
-            titleLabel.leftAnchor.constraint(equalTo: contentView.leftAnchor),
-            titleLabel.rightAnchor.constraint(equalTo: contentView.rightAnchor),
-            titleLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
-            titleLabel.heightAnchor.constraint(equalTo: contentView.heightAnchor, multiplier: 1/3),
+            valueLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 0),
+            valueLabel.leadingAnchor.constraint(equalTo: contentView.centerXAnchor, constant: 0),
+            valueLabel.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: 0),
+            valueLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: 0),
         ])
     }
 }

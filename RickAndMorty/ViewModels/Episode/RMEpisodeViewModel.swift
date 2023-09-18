@@ -77,17 +77,17 @@ final class RMEpisodeViewModel: NSObject {
         
         let item = NSCollectionLayoutItem(
             layoutSize: NSCollectionLayoutSize(
-                widthDimension: .fractionalWidth(0.5),
-                heightDimension: .absolute(125)
+                widthDimension: .fractionalWidth(1.0),
+                heightDimension: .fractionalHeight(1.0)
             )
         )
         item.contentInsets = NSDirectionalEdgeInsets(top: 2.5, leading: 2.5, bottom: 2.5, trailing: 2.5)
         let group = NSCollectionLayoutGroup.horizontal(
             layoutSize: NSCollectionLayoutSize(
                 widthDimension: .fractionalWidth(1.0),
-                heightDimension: .absolute(125)
+                heightDimension: .absolute(100)
             ),
-            subitems: [item, item]
+            subitems: [item]
         )
         group.contentInsets = NSDirectionalEdgeInsets(top: 0.0, leading: 0.0, bottom: 0.0, trailing: 0.0)
         let section = NSCollectionLayoutSection(group: group)
@@ -103,7 +103,7 @@ final class RMEpisodeViewModel: NSObject {
                 heightDimension: .absolute(150)
             )
         )
-        item.contentInsets = NSDirectionalEdgeInsets(top: 2.5, leading: 0.0, bottom: 2.5, trailing: 0.0)
+        item.contentInsets = NSDirectionalEdgeInsets(top: 2.5, leading: 0.0, bottom: 2.5, trailing: 5.0)
         let group = NSCollectionLayoutGroup.vertical(
             layoutSize: NSCollectionLayoutSize(
                 widthDimension: .fractionalWidth(0.75),
@@ -111,16 +111,16 @@ final class RMEpisodeViewModel: NSObject {
             ),
             subitems: [item, item]
         )
-        group.contentInsets = NSDirectionalEdgeInsets(top: 0.0, leading: 2.5, bottom: 0.0, trailing: 2.5)
+        group.contentInsets = NSDirectionalEdgeInsets(top: 0.0, leading: 0.0, bottom: 0.0, trailing: 0.0)
         let section = NSCollectionLayoutSection(group: group)
-        section.contentInsets = NSDirectionalEdgeInsets(top: 2.5, leading: 2.5, bottom: 2.5, trailing: 2.5)
+        section.contentInsets = NSDirectionalEdgeInsets(top: 2.5, leading: 5.0, bottom: 2.5, trailing: 0.0)
         section.orthogonalScrollingBehavior = .continuousGroupLeadingBoundary
         return section
     }
     
     private func fetchRelatedCharacters() {
         
-        let requests: [RMRequest] = episode.characters.compactMap({ URL(string: $0) }).compactMap({ RMRequest(url: $0) })
+        let requests: [RMRequest] = episode.characters.compactMap({ RMRequest(url: URL(string: $0)) })
         
         var characters: [RMCharacter] = []
         let group = DispatchGroup()
@@ -195,9 +195,10 @@ extension RMEpisodeViewModel: UICollectionViewDelegate, UICollectionViewDataSour
         
         let sectionType = sectionTypes[indexPath.section]
         switch sectionType {
-        case .characters(let cellModels):
-//            guard let character = cellModels[indexPath.item].character as? RMCharacter else { return }
-//            delegate?.didSelectCharacter(character)
+        case .characters:
+            guard let characters = characters, characters.indices.contains(indexPath.item) else { return }
+            let character = characters[indexPath.item]
+            delegate?.didSelectCharacter(character)
             return
         default:
             return
