@@ -9,7 +9,7 @@ import UIKit
 
 class RMSearchViewController: UIViewController {
     
-    enum Configuration {
+    @frozen enum Configuration {
         case character
         case location
         case episode
